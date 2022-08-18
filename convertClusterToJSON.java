@@ -12,21 +12,21 @@ import java.util.Set;
 class convertToJSON{
 
     public static void main(String[] args) throws IOException{
+        ArrayList<Integer> cluster = new ArrayList<Integer>();
         ArrayList<Integer> nodes = new ArrayList<Integer>();
-        ArrayList<Integer> links = new ArrayList<Integer>();
-        Set<String> actualNodes = new HashSet<>();
+        //Set<String> actualNodes = new HashSet<>();
         int count = 0;
         BufferedReader reader;
         
         
 		try {
 			reader = new BufferedReader(new FileReader
-            ("G:\\My Drive\\Bachelor of Engineering (Honours)\\2022\\Sem1\\EGH400-1\\Project\\network_to_share_200.txt"));
+            ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\output.csv")); //THIS NEEDS TO BE PASSED IN
             String line = reader.readLine();
 
             while (line != null) {
 
-                String[] values = line.split("\t");
+                String[] values = line.split(",");
                 actualNodes.add(values[0]);
                 actualNodes.add(values[1]);
                 nodes.add(Integer.parseInt(values[0]));

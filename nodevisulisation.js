@@ -1,9 +1,9 @@
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
-
+var filename = "JSONfiles\\NetworkProject_2.JSON";
 var canvas = d3.select("#network"),
-    total = 200-1;
+    total = 1000-1;
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,
@@ -24,7 +24,7 @@ simulation = d3.forceSimulation()
 //   d.x = Math.random() * width;
 //   d.y = Math.random() * height;
 // });
-d3.json("JSONfiles\\NetworkProject_1.JSON", function(err, graph){ 
+d3.json(filename, function(err, graph){ 
 //d3.json("fakedata.JSON", function (err, graph) {
     if (err) throw err;
 
@@ -73,7 +73,7 @@ function exportNodeLocations(){
     console.log('HERE!')
     fs.open('Rmynewfile.txt', 'w', function (err, file) {
         if (err) throw err;
-        console.log('Saved!');
+        console.log('Saved!!!!');
       });
     for(let i = 0; i < xCoordinates.length; i++){
         fs.appendFile("Rmynewfile.txt", `${xCoordinates[i]}\t${yCoordinates[i]}\n`, function (err) {
