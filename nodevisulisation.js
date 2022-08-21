@@ -1,9 +1,9 @@
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
-var filename = "JSONfiles\\NetworkProject_2.JSON";
+var filename = "JSONfiles\\NetworkProject_1.JSON";
 var canvas = d3.select("#network"),
-    total = 1000-1;
+    total = 200-1;
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,

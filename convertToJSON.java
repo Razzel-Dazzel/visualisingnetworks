@@ -89,9 +89,7 @@ class convertToJSON{
 
         List<Integer> sortedList = new ArrayList<Integer>(actualNodes);
         Collections.sort(sortedList);
-        for(int i= 0; i<sortedList.size(); i++){
-            System.out.println(sortedList.get(i).toString());
-        }
+
 
         Iterator itr = actualNodes.iterator();
         if (fw != null) {

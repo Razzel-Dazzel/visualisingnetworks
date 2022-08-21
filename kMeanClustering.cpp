@@ -51,7 +51,7 @@ vector<Point> readcsv(char** filename) {
 // Makae this functions
 void kMeansClustering(vector<Point>* points, int epochs, int k)
 {
-    int n = 1000;
+    int n = 200;
     vector<Point> centroids;
     vector<int> nPoints;
     vector<double> sumX, sumY;
