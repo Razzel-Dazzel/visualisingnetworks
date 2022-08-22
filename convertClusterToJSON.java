@@ -17,7 +17,8 @@ class convertClusterToJSON{
         // ArrayList<Integer> cluster = new ArrayList<Integer>();
         // ArrayList<Integer> nodes = new ArrayList<Integer>();
         //Set<String> actualNodes = new HashSet<>();
-        ArrayList<ArrayList<Integer>> clusterNodesBelongsTo = new ArrayList<>(numberOfClusters);
+        int [][] clusterConnections = new int[numberOfClusters][numberOfClusters];
+        ArrayList<ArrayList<Integer>> clusterNodesBelongsTo = new ArrayList<>(1);
         for(int i=0; i < numberOfClusters; i++) {
             clusterNodesBelongsTo.add(new ArrayList());
         } 
@@ -54,17 +55,8 @@ class convertClusterToJSON{
 		}
 
 
-        int vertexCount = clusterNodesBelongsTo.size();
-        for (int i = 0; i < vertexCount; i++) {
-            int edgeCount = clusterNodesBelongsTo.get(i).size();
-            for (int j = 0; j < edgeCount; j++) {
-                Integer startVertex = i;
-                Integer endVertex = clusterNodesBelongsTo.get(i).get(j);
-                System.out.printf("Vertex %d is connected to vertex %d%n", startVertex, endVertex);
-            }
-        }
-
-        // for (int i = 0; i < 9; i++) {
+        // int vertexCount = clusterNodesBelongsTo.size();
+        // for (int i = 0; i < 4; i++) {
         //     int edgeCount = clusterNodesBelongsTo.get(i).size();
         //     for (int j = 0; j < edgeCount; j++) {
         //         Integer startVertex = i;
