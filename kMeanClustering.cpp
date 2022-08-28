@@ -4,6 +4,7 @@
 #include <iostream>  // for file-reading
 #include <sstream>   // for file-reading
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -62,10 +63,17 @@ void kMeansClustering(vector<Point>* points, int epochs, int k)
         sumX.push_back(0.0);
         sumY.push_back(0.0);
     }
+
     //This is picking a random node to be a cluster centre
     srand(time(0));  // need to set the random seed
-    for (int i = 0; i < k; ++i) {
-        centroids.push_back(points->at(rand() % n));
+    std::set<int> numbers;
+    while (numbers.size() < k)
+    {
+        numbers.insert(rand() % n);
+    }
+
+    for(auto f : numbers) {
+        centroids.push_back(points->at(f));
     }
 
     for (vector<Point>::iterator c = begin(centroids); 

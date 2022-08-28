@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,7 +17,6 @@ class convertToJSON{
         ArrayList<Integer> nodes = new ArrayList<Integer>();
         ArrayList<Integer> links = new ArrayList<Integer>();
         Set<Integer> actualNodes = new HashSet<>();
-        int count = 0;
         BufferedReader reader;
         
         
@@ -55,7 +53,6 @@ class convertToJSON{
             try {
                 f.createNewFile();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }else{
@@ -68,7 +65,6 @@ class convertToJSON{
             try {
                 f.createNewFile();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -83,8 +79,6 @@ class convertToJSON{
         }
 
 
-
-        int counter = 0;
         boolean writingToFile = true;
 
         List<Integer> sortedList = new ArrayList<Integer>(actualNodes);
@@ -98,24 +92,23 @@ class convertToJSON{
                 try {
 
       
-                    fw.write("{\n");
-                    fw.write("\"nodes\": [\n");
+                    fw.write("{\n\"nodes\": [\n");
+                    Boolean flag = false;
                     while(itr.hasNext()) {
                         Object element = itr.next();
-                        fw.write("\t{ \"name\": \"" +  element.toString() + "\"},\n");
+                        if(!flag) flag = true;
+                        else fw.write(",\n");
+                        fw.write("\t{ \"name\": \"" +  element.toString() + "\"}");
                     }
-                    fw.write("],\n");
-                    fw.write("\"links\": [\n");
-                    for(int i = 0; i<nodes.size(); i++){
-                        fw.write("\t{ \"source\": \"" + nodes.get(i) + 
-                        "\",\"target\": \"" + links.get(i) + "\"},\n");
+                    fw.write("\n],\n\"links\": [\n\t{ \"source\": \"" + nodes.get(0) + 
+                        "\",\"target\": \"" + links.get(0) + "\"}");
+                    for(int i = 1; i<nodes.size(); i++){
+                        fw.write(",\n\t{ \"source\": \"" + nodes.get(i) + 
+                        "\",\"target\": \"" + links.get(i) + "\"}");
                     }
                     System.out.println(actualNodes.size());
-                    fw.write("]\n}");
+                    fw.write("\n]\n}");
 
-
-
-    
                 } catch (IOException e) {
                     break;
                 }

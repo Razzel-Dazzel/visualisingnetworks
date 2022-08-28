@@ -1,14 +1,9 @@
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 
 class convertClusterToJSON{
 
@@ -23,16 +18,14 @@ class convertClusterToJSON{
             clusterNodesBelongsTo.add(new ArrayList());
         } 
 
-        int[][] ClusterNodeConnections = new int[numberOfClusters][numberOfClusters];
-
         //clusterNodesBelongsTo.get(0).add(2);
         int count = 0;
         BufferedReader reader;
          
 		try {
 			reader = new BufferedReader(new FileReader
-            ("C:\\Users\\ALD9\\Desktop\\output.csv"));
-            //("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\output.csv")); //THIS NEEDS TO BE PASSED IN
+            //("C:\\Users\\ALD9\\Desktop\\output.csv"));
+            ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\output.csv")); //THIS NEEDS TO BE PASSED IN
             String line = reader.readLine();
             
             while (line != null) {
@@ -57,8 +50,8 @@ class convertClusterToJSON{
 		}
 
 
-        // int vertexCount = clusterNodesBelongsTo.size();
-        // for (int i = 0; i < vertexCount; i++) {
+        // int vertexCount2 = clusterNodesBelongsTo.size();
+        // for (int i = 0; i < vertexCount2; i++) {
         //     int edgeCount = clusterNodesBelongsTo.get(i).size();
         //     for (int j = 0; j < edgeCount; j++) {
         //         Integer startVertex = i;
@@ -67,12 +60,12 @@ class convertClusterToJSON{
         //     }
         // }
 
-// New i need to read the original file again to see how many nodes in different clusters connect with one another
+// Now i need to read the original file again to see how many nodes in different clusters connect with one another
 
     try {
         reader = new BufferedReader(new FileReader
-        ("C:\\Users\\ALD9\\Desktop\\network_to_share_200.txt"));
-        //("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\output.csv")); //THIS NEEDS TO BE PASSED IN
+        //("C:\\Users\\ALD9\\Desktop\\network_to_share_200.txt"));
+        ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\network_to_share_200.txt")); //THIS NEEDS TO BE PASSED IN
         String line = reader.readLine();
 
 
@@ -127,16 +120,16 @@ class convertClusterToJSON{
     }
 
 
-    // for (int i = 0; i <clusterConnections.length ; i++) {
-    //     int edgeCount = clusterConnections[i].length;
-    //     for (int j = 0; j < edgeCount; j++) {
-    //         System.out.printf("| %d | ", clusterConnections[i][j]);
-    //     }
-    //     System.out.println();
-    // }
+    for (int i = 0; i <clusterConnections.length ; i++) {
+        int edgeCount = clusterConnections[i].length;
+        for (int j = 0; j < edgeCount; j++) {
+            System.out.printf("| %d | ", clusterConnections[i][j]);
+        }
+        System.out.println();
+    }
 
     // Creating a new file that converts the one supplied into a JSON file.
-    String filePath = "C:\\Users\\ALD9\\Desktop\\JSON200\\";
+    String filePath = "C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\JSON200\\";
     String fileName = "200Cluster";
     File f = new File(filePath + fileName + ".JSON");
 
@@ -145,7 +138,6 @@ class convertClusterToJSON{
         try {
             f.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }else{
@@ -158,7 +150,6 @@ class convertClusterToJSON{
         try {
             f.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -204,24 +195,22 @@ class convertClusterToJSON{
                 int vertexCount = clusterNodesBelongsTo.size();
                 for (int i = 0; i < vertexCount; i++) {
                     int edgeCount = clusterNodesBelongsTo.get(i).size();
-                    fw.write("\t{ \""+i+"\": [");
-                    for(int j = 0; j < edgeCount; j++){
-                        fw.write(""+clusterNodesBelongsTo.get(i).get(j)+"");
-                        if(j < edgeCount-1){
-                            fw.write(","); 
-                        }
+                    fw.write("\t{ \""+i+"\": ["+clusterNodesBelongsTo.get(i).get(0));
+                    for(int j = 1; j < edgeCount; j++){
+                        fw.write(","+clusterNodesBelongsTo.get(i).get(j)+"");
                     }
-                    fw.write("]},\n");
+                    fw.write((i == vertexCount-1) ? "]}\n" : "]},\n");
                 }
 
-                fw.write("\n],\n");
-                fw.write("\"links\": [\n");
-                for(int i=0 ; i < numberOfClusters; i++){ //9
-                    for(int j=0; j<=0+i ;j++){
-                        if(clusterConnections[i][j] >= 30 && i != j){
-                            if(i>0 && j>=0 && i < numberOfClusters && j < numberOfClusters){
-                                fw.write(",\n");
-                            }
+
+                fw.write("\n],\n\"links\": [\n");
+                int arbVal = 30;
+                Boolean flag = false;
+                for(int i=1 ; i < numberOfClusters; i++){ //9
+                    for(int j=0; j<i ;j++){
+                        if(clusterConnections[i][j] >= arbVal){
+                            if(!flag) flag = true;
+                            else fw.write(",\n");
                             fw.write("\t{ \"source\": \""+i+"\",\"target\": \""+j+"\"}");
                         }
                     }

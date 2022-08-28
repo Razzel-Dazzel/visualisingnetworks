@@ -1,7 +1,8 @@
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
-var filename = "JSONfiles\\NetworkProject_1.JSON";
+//var filename = "JSONfiles\\NetworkProject.JSON";
+var filename = "JSON200\\200Cluster.JSON";
 var canvas = d3.select("#network"),
     total = 200-1;
     width = canvas.attr("width"),
@@ -16,7 +17,7 @@ simulation = d3.forceSimulation()
     .force("y", d3.forceY(height / 2)) // ---- Locking y plane to the middle ----
     .force("collide", d3.forceCollide(r))
     .force("charge", d3.forceManyBody()
-        .strength(-50)) // Helps repell nodes from one another
+        .strength(-200)) // Helps repell nodes from one another
     .force("link", d3.forceLink()
         .id(function (d) { return d.name; }));
 
