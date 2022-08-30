@@ -90,8 +90,6 @@ class convertToJSON{
             while (writingToFile) { //same as while(runTrue == true)
     
                 try {
-
-      
                     fw.write("{\n\"nodes\": [\n");
                     Boolean flag = false;
                     while(itr.hasNext()) {
