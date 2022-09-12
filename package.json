@@ -10,6 +10,6 @@
   "author": "Adam Loynd",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^19.0.10"
+    "electron": "^19.0.16"
   }
 }

@@ -16,6 +16,8 @@ const createWindow = () => {
     mainWindow.loadFile("index.html")
 };
 
+app.disableHardwareAcceleration();
+
 app.on('window-all-closed', () => {
     if (mainWindow.platform !== 'darwin') app.quit();
 });
