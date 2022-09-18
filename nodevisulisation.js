@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {execFile} = require("child_process");
+const {exec, execFile} = require("child_process");
 const path = require('path');
 const fs = require('fs');
 const { systemPreferences } = require('electron');
@@ -43,23 +43,23 @@ function simulationModel(filename) {
             .links(graph.links);
 
         function update() {
-            if(firstItteration =  true){
-                for(i=0; i<xCoordinates.length; i++){
-                    if(xCoordinates[i] != xCoordinatesCheck[i]) {
-                        xCoordinates.forEach(function callback(value, index) { xCoordinatesCheck[index] = value});
-                        break;
-                    }
-                }
-                for(i=0; i<yCoordinates.length; i++){
-                    if(yCoordinates[i] != yCoordinatesCheck[i]) {
-                        yCoordinates.forEach(function callback(value, index) { yCoordinatesCheck[index] = value});
-                        break;
-                    }
-                }
-                firstItteration = false;
-                exportNodeLocations();
-                console.log("here");
-            }
+            // if(firstItteration =  true){
+            //     for(i=0; i<xCoordinates.length; i++){
+            //         if(xCoordinates[i] != xCoordinatesCheck[i]) {
+            //             xCoordinates.forEach(function callback(value, index) { xCoordinatesCheck[index] = value});
+            //             break;
+            //         }
+            //     }
+            //     for(i=0; i<yCoordinates.length; i++){
+            //         if(yCoordinates[i] != yCoordinatesCheck[i]) {
+            //             yCoordinates.forEach(function callback(value, index) { yCoordinatesCheck[index] = value});
+            //             break;
+            //         }
+            //     }
+            //     firstItteration = false;
+            //     exportNodeLocations();
+            //     console.log("here");
+            // }
             // Clearing the canvas each time a draw is done
             ctx.clearRect(0, 0, width, height);
             // Drawing the links
@@ -132,7 +132,8 @@ async function getNodeClustes(){
 async function convertClusterToJSON(){
     const clusterDataFile = `.\\output.csv`;
     try{
-        await execFile("./convertClusterToJSON", [clusterDataFile], (err, stdout, stderr) =>{
+        await exec("java convertClusterToJSON", (err, stdout, stderr) =>{
+            console.log("I AM HERE!!!");
             if(err){
                 console.log(err);
             } if(stderr){

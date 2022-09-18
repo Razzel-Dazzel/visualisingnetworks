@@ -12,6 +12,7 @@ class convertClusterToJSON{
         // ArrayList<Integer> cluster = new ArrayList<Integer>();
         // ArrayList<Integer> nodes = new ArrayList<Integer>();
         //Set<String> actualNodes = new HashSet<>();
+        System.out.print(System.getProperty("user.dir")); //THIS VERY GOOOOOOOOODDD!!!!!!qwygedjashdgajydg12837eg18y3d12378gder8qdgjasdgbjkasda
         int [][] clusterConnections = new int[numberOfClusters][numberOfClusters];
         ArrayList<ArrayList<Integer>> clusterNodesBelongsTo = new ArrayList<>(1);
         for(int i=0; i < numberOfClusters; i++) {
@@ -129,7 +130,7 @@ class convertClusterToJSON{
     }
 
     // Creating a new file that converts the one supplied into a JSON file.
-    String filePath = "\\JSON200\\";
+    String filePath = ".\\JSON200\\";
     String fileName = "200Cluster";
     File f = new File(filePath + fileName + ".JSON");
 
