@@ -1,5 +1,5 @@
 const electron = require('electron');
-const {exec} = require("child_process");
+const {execFile} = require("child_process");
 const path = require('path');
 const fs = require('fs');
 const { systemPreferences } = require('electron');
@@ -43,23 +43,23 @@ function simulationModel(filename) {
             .links(graph.links);
 
         function update() {
-            // if(firstItteration =  true){
-            //     for(i=0; i<xCoordinates.length; i++){
-            //         if(xCoordinates[i] != xCoordinatesCheck[i]) {
-            //             xCoordinates.forEach(function callback(value, index) { xCoordinatesCheck[index] = value});
-            //             break;
-            //         }
-            //     }
-            //     for(i=0; i<yCoordinates.length; i++){
-            //         if(yCoordinates[i] != yCoordinatesCheck[i]) {
-            //             yCoordinates.forEach(function callback(value, index) { yCoordinatesCheck[index] = value});
-            //             break;
-            //         }
-            //     }
-            //     firstItteration = false;
-            //     exportNodeLocations();
-            //     console.log("here");
-            // }
+            if(firstItteration =  true){
+                for(i=0; i<xCoordinates.length; i++){
+                    if(xCoordinates[i] != xCoordinatesCheck[i]) {
+                        xCoordinates.forEach(function callback(value, index) { xCoordinatesCheck[index] = value});
+                        break;
+                    }
+                }
+                for(i=0; i<yCoordinates.length; i++){
+                    if(yCoordinates[i] != yCoordinatesCheck[i]) {
+                        yCoordinates.forEach(function callback(value, index) { yCoordinatesCheck[index] = value});
+                        break;
+                    }
+                }
+                firstItteration = false;
+                exportNodeLocations();
+                console.log("here");
+            }
             // Clearing the canvas each time a draw is done
             ctx.clearRect(0, 0, width, height);
             // Drawing the links
@@ -96,24 +96,50 @@ function simulationModel(filename) {
 }
 simulationModel(filename)
 
-function exportNodeLocations(){ 
+async function exportNodeLocations(){ 
     console.log("Done!");
     file = fs.createWriteStream('array.txt');
     file.on('error', function(err) { /* error handling */ });
     xCoordinates.forEach(function callback(value, index){ file.write(value + '\t' + yCoordinates[index] + '\n'); });
     file.end();
     filename = "JSON200\\200Cluster.JSON";
-    var trying = `C:\\Users\adam-\\OneDrive\\Documents\\GitHub\\visualisingnetworks\\Rmynewfile.txt`;
-    exec(".\\kMeanClustering", [trying], (err, stdout, stderr) =>{
-        if(err){
-            console.log(err);
-        } if(stderr){
-            console.log(stderr);
-        }
-    }) ;
+    await getNodeClustes();
+    await convertClusterToJSON();
     console.log("Done!");
     // Need to new run kMeansClustering.exe
     // Teke that output of kMeansClustering.exe and put that into Cluster JSON converter
     // Update filename to be 
 }
 
+
+async function getNodeClustes(){
+    const nodepositions = `.\\Rmynewfile.txt`;
+    try{
+        await execFile("./kMeanClustering", [nodepositions], (err, stdout, stderr) =>{
+            if(err){
+                console.log(err);
+            } if(stderr){
+                console.log(stderr);
+            }
+        }) ;
+        return 1;
+    } catch(err){
+        console.log(err);
+    }
+    
+}
+
+async function convertClusterToJSON(){
+    const clusterDataFile = `.\\output.csv`;
+    try{
+        await execFile("./convertClusterToJSON", [clusterDataFile], (err, stdout, stderr) =>{
+            if(err){
+                console.log(err);
+            } if(stderr){
+                console.log(stderr);
+            }
+        }) ;
+    }catch(err){
+        console.log(err);
+    };
+}

@@ -116,14 +116,15 @@ void kMeansClustering(vector<Point>* points, int epochs, int k)
 
     ofstream myfile;
     myfile.open("output.csv");
-    myfile << "x,y,c" << endl;
+    // For troubleshootting the below can be uncommented and will show the centroid nodes
+    // from the kMeansClustering 
+    // myfile << "x,y,c" << endl;
 
-    for (vector<Point>::iterator itss = begin(centroids); 
-        itss != end(centroids); ++itss) {
-        myfile << itss->x << "," << itss->y << endl;
-    }
+    // for (vector<Point>::iterator itss = begin(centroids); 
+    //     itss != end(centroids); ++itss) {
+    //     myfile << itss->x << "," << itss->y << endl;
+    // }
     
-
     for (vector<Point>::iterator it = points->begin(); 
         it != points->end(); ++it) {
         myfile << it->x << "," << it->y << "," << it->cluster << endl;

@@ -25,7 +25,7 @@ class convertClusterToJSON{
 		try {
 			reader = new BufferedReader(new FileReader
             //("C:\\Users\\ALD9\\Desktop\\output.csv"));
-            ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\output.csv")); //THIS NEEDS TO BE PASSED IN
+            ("output.csv")); //THIS NEEDS TO BE PASSED IN
             String line = reader.readLine();
             
             while (line != null) {
@@ -65,7 +65,7 @@ class convertClusterToJSON{
     try {
         reader = new BufferedReader(new FileReader
         //("C:\\Users\\ALD9\\Desktop\\network_to_share_200.txt"));
-        ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\network_to_share_200.txt")); //THIS NEEDS TO BE PASSED IN
+        ("network_to_share_200.txt")); //THIS NEEDS TO BE PASSED IN
         String line = reader.readLine();
 
 
@@ -129,7 +129,7 @@ class convertClusterToJSON{
     }
 
     // Creating a new file that converts the one supplied into a JSON file.
-    String filePath = "C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\JSON200\\";
+    String filePath = "\\JSON200\\";
     String fileName = "200Cluster";
     File f = new File(filePath + fileName + ".JSON");
 
