@@ -4,11 +4,12 @@ const path = require('path');
 const fs = require('fs');
 const { systemPreferences } = require('electron');
 var filename = "JSONfiles\\NetworkProject.JSON";
+//var filename = "JSON200\\200Cluster.JSON";
 var spawn = require("child_process").spawn;
 var firstItteration = true;
 //var filename = "JSON200\\200Cluster.JSON";
 var canvas = d3.select("#network"),
-    total = 9-1;
+    total = 200, //total = JSON.parse(filename).nodenumber,
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,
@@ -43,23 +44,26 @@ function simulationModel(filename) {
             .links(graph.links);
 
         function update() {
-            // if(firstItteration =  true){
-            //     for(i=0; i<xCoordinates.length; i++){
-            //         if(xCoordinates[i] != xCoordinatesCheck[i]) {
-            //             xCoordinates.forEach(function callback(value, index) { xCoordinatesCheck[index] = value});
-            //             break;
-            //         }
-            //     }
-            //     for(i=0; i<yCoordinates.length; i++){
-            //         if(yCoordinates[i] != yCoordinatesCheck[i]) {
-            //             yCoordinates.forEach(function callback(value, index) { yCoordinatesCheck[index] = value});
-            //             break;
-            //         }
-            //     }
-            //     firstItteration = false;
-            //     exportNodeLocations();
-            //     console.log("here");
-            // }
+
+            notidentical:
+            if(firstItteration){
+                for(i=0; i<xCoordinates.length; i++){
+                    console.log(xCoordinates[i] != xCoordinatesCheck[i]);
+                    if(xCoordinates[i] != xCoordinatesCheck[i] || yCoordinates[i] != yCoordinatesCheck[i]) {
+                        //console.log("I am breaking!");
+                        xCoordinates.forEach(function callback(value, index) { 
+                            xCoordinatesCheck[index] = value;
+                            yCoordinatesCheck[index] = yCoordinates[index]
+                        });
+                            break notidentical;
+                    }
+                }
+                console.log("I have reached the end");
+                firstItteration = false;
+                exportNodeLocations();
+                console.log("here");
+            }
+
             // Clearing the canvas each time a draw is done
             ctx.clearRect(0, 0, width, height);
             // Drawing the links
@@ -85,8 +89,6 @@ function simulationModel(filename) {
         if(d.name == 6){
             ctx.fillStyle = "red";
         }
-        // xCoordinates = [d.x, ...xCoordinates.slice(0, total)]
-        // yCoordinates = [d.y, ...yCoordinates.slice(0, total)]
     }
 
     function drawLink(l) {
@@ -94,7 +96,7 @@ function simulationModel(filename) {
         ctx.lineTo(l.target.x, l.target.y);
     }
 }
-simulationModel(filename)
+simulationModel(filename);
 
 async function exportNodeLocations(){ 
     console.log("Done!");
@@ -102,18 +104,20 @@ async function exportNodeLocations(){
     file.on('error', function(err) { /* error handling */ });
     xCoordinates.forEach(function callback(value, index){ file.write(value + '\t' + yCoordinates[index] + '\n'); });
     file.end();
-    filename = "JSON200\\200Cluster.JSON";
-    await getNodeClustes();
-    await convertClusterToJSON();
-    console.log("Done!");
-    // Need to new run kMeansClustering.exe
-    // Teke that output of kMeansClustering.exe and put that into Cluster JSON converter
-    // Update filename to be 
+    filename = ".\\JSON200\\200Cluster.JSON";
+    await getNodeClustes()
+    .then( function () {
+        convertClusterToJSON();
+    })
+    .then( async () => {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        simulationModel(filename);
+    });
 }
 
 
 async function getNodeClustes(){
-    const nodepositions = `.\\Rmynewfile.txt`;
+    const nodepositions = `Rmynewfile.txt`;
     try{
         await execFile("./kMeanClustering", [nodepositions], (err, stdout, stderr) =>{
             if(err){
@@ -133,7 +137,6 @@ async function convertClusterToJSON(){
     const clusterDataFile = `.\\output.csv`;
     try{
         await exec("java convertClusterToJSON", (err, stdout, stderr) =>{
-            console.log("I AM HERE!!!");
             if(err){
                 console.log(err);
             } if(stderr){

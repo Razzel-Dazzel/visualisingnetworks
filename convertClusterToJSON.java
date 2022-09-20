@@ -12,7 +12,7 @@ class convertClusterToJSON{
         // ArrayList<Integer> cluster = new ArrayList<Integer>();
         // ArrayList<Integer> nodes = new ArrayList<Integer>();
         //Set<String> actualNodes = new HashSet<>();
-        System.out.print(System.getProperty("user.dir")); //THIS VERY GOOOOOOOOODDD!!!!!!qwygedjashdgajydg12837eg18y3d12378gder8qdgjasdgbjkasda
+        //System.out.print(System.getProperty("user.dir")); //THIS MIGTH COME IN HANDY
         int [][] clusterConnections = new int[numberOfClusters][numberOfClusters];
         ArrayList<ArrayList<Integer>> clusterNodesBelongsTo = new ArrayList<>(1);
         for(int i=0; i < numberOfClusters; i++) {
@@ -172,10 +172,10 @@ class convertClusterToJSON{
 
             try {
                 fw.write("{\n");
-                fw.write("\"clusters\": [\n");
+                fw.write("\"nodes\": [\n");
                 for(int i=0; i < numberOfClusters; i++ ) {
                     //Object element = itr.next();
-                    fw.write("\t{ \"cluster\": \"" +  i + "\"}");
+                    fw.write("\t{ \"name\": \"" +  i + "\"}");
                     if(i < numberOfClusters-1){
                         fw.write(",\n");
                     }
