@@ -4,12 +4,22 @@ const path = require('path');
 const fs = require('fs');
 const { systemPreferences } = require('electron');
 var filename = "JSONfiles\\NetworkProject.JSON";
+// var totaltest;
+// fs.readFile("JSONfiles\\NetworkProject.JSON", 'utf8', (err, jsonString) => {
+//     if (err) {
+//         console.log("File read failed:", err)
+//         return
+//     }
+//     var jsonObj = JSON.parse(jsonString);
+//     totaltest = jsonObj.numNodes.toString();
+// })
+
 //var filename = "JSON200\\200Cluster.JSON";
 var spawn = require("child_process").spawn;
 var firstItteration = true;
 //var filename = "JSON200\\200Cluster.JSON";
 var canvas = d3.select("#network"),
-    total = 200, //total = JSON.parse(filename).nodenumber,
+    total = 200, //total = JSON.parse(filename).nodenumber, //TRY AND FIND OUT HOW TO READ IN DATA AND WAIT FOR THIS REPLY
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,
@@ -17,6 +27,8 @@ var canvas = d3.select("#network"),
     yCoordinatesCheck = new Array(total),
     xCoordinates = new Array(total),
     yCoordinates = new Array(total);
+
+
 
 function simulationModel(filename) {
     ctx = canvas.node().getContext("2d");
@@ -96,6 +108,8 @@ function simulationModel(filename) {
         ctx.lineTo(l.target.x, l.target.y);
     }
 }
+
+
 simulationModel(filename);
 
 async function exportNodeLocations(){ 

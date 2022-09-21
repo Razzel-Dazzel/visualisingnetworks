@@ -1,4 +1,5 @@
 {
+"numNodes": "200",
 "nodes": [
 	{ "name": "0"},
 	{ "name": "1"},

@@ -14,6 +14,7 @@ import java.util.Set;
 class convertToJSON{
 
     public static void main(String[] args) throws IOException{
+        int numnodes = 0;
         ArrayList<Integer> nodes = new ArrayList<Integer>();
         ArrayList<Integer> links = new ArrayList<Integer>();
         Set<Integer> actualNodes = new HashSet<>();
@@ -22,21 +23,22 @@ class convertToJSON{
         
 		try {
 			reader = new BufferedReader(new FileReader
-            ("C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\network_to_share_200.txt"));
+            ("network_to_share_200.txt"));
             String line = reader.readLine();
 
+            numnodes = Integer.parseInt(line);
+            line = reader.readLine();
+            
             while (line != null) {
-
                 String[] values = line.split("\t");
                 actualNodes.add(Integer.parseInt(values[0]));
                 actualNodes.add(Integer.parseInt(values[1]));
                 nodes.add(Integer.parseInt(values[0]));
                 links.add(Integer.parseInt(values[1]));
                 System.out.println();
-				// read next line
-				line = reader.readLine();
+                // read next line
+                line = reader.readLine();
                 //System.out.println(line);
-
 			}
 			reader.close();
 		} catch (IOException e) {
@@ -44,7 +46,7 @@ class convertToJSON{
 		}
 
         // Creating a new file that converts the one supplied into a JSON file.
-        String filePath = "C:\\Users\\adam-\\Documents\\Programming\\GItRepo\\visualisingnetworks\\JSONfiles\\";
+        String filePath = ".\\JSONfiles\\";
         String fileName = "NetworkProject";
         File f = new File(filePath + fileName + ".JSON");
 
@@ -90,7 +92,10 @@ class convertToJSON{
             while (writingToFile) { //same as while(runTrue == true)
     
                 try {
-                    fw.write("{\n\"nodes\": [\n");
+                    fw.write("{\n\"numNodes\": \"" + numnodes + "\",\n");
+
+
+                    fw.write("\"nodes\": [\n");
                     Boolean flag = false;
                     while(itr.hasNext()) {
                         Object element = itr.next();

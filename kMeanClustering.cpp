@@ -5,6 +5,7 @@
 #include <sstream>   // for file-reading
 #include <vector>
 #include <set>
+#include <string>
 
 using namespace std;
 
@@ -50,9 +51,9 @@ vector<Point> readcsv(char** filename) {
 }
 
 // Makae this functions
-void kMeansClustering(vector<Point>* points, int epochs, int k)
+void kMeansClustering(vector<Point>* points, int epochs, int k, int totalNodes)
 {
-    int n = 200;
+    int n = totalNodes;
     vector<Point> centroids;
     vector<int> nPoints;
     vector<double> sumX, sumY;
@@ -133,14 +134,20 @@ void kMeansClustering(vector<Point>* points, int epochs, int k)
 }
 
 int main(int argc, char** argv) {
-    // if(argc < 3){
-    //     cout << "Please provide a file, K value and epochs!";
-    //     return 1;
-    // }
+    int const default_argc = 3;
+    char* const default_args[] = { "Rmynewfile.txt", 20, 200};
+    if (argc == 1)   // no arguments were passed
+    {
+       // do things for no arguments
 
-    int k = 9;
+       // usually those variables are set here for a generic flow onwards
+       argc = default_argc;
+       argv = default_args;
+    }
+    int totalNodes = stoi(argv[3]);
+    int k = stoi(argv[2]);
     int epochs = 100; //argv[3]
     vector<Point> points = readcsv(&argv[1]); 
-    kMeansClustering(&points, epochs, k);
+    kMeansClustering(&points, epochs, k, totalNodes);
     return 0;
 }

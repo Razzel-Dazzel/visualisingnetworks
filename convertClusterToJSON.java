@@ -25,7 +25,6 @@ class convertClusterToJSON{
          
 		try {
 			reader = new BufferedReader(new FileReader
-            //("C:\\Users\\ALD9\\Desktop\\output.csv"));
             ("output.csv")); //THIS NEEDS TO BE PASSED IN
             String line = reader.readLine();
             
@@ -65,10 +64,9 @@ class convertClusterToJSON{
 
     try {
         reader = new BufferedReader(new FileReader
-        //("C:\\Users\\ALD9\\Desktop\\network_to_share_200.txt"));
         ("network_to_share_200.txt")); //THIS NEEDS TO BE PASSED IN
         String line = reader.readLine();
-
+        line = reader.readLine(); // Skipping first line that says the number of nodes
 
         while (line != null) {
 
