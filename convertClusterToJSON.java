@@ -8,7 +8,10 @@ import java.util.ArrayList;
 class convertClusterToJSON{
 
     public static void main(String[] args) throws IOException{
-        int numberOfClusters = 9; // This needs to be passed into the application at some point
+        // This needs to be passed into the application at some point
+
+        int numberOfClusters = Integer.parseInt(args[0]);
+        //int numberOfClusters = 20;
         // ArrayList<Integer> cluster = new ArrayList<Integer>();
         // ArrayList<Integer> nodes = new ArrayList<Integer>();
         //Set<String> actualNodes = new HashSet<>();
@@ -16,7 +19,7 @@ class convertClusterToJSON{
         int [][] clusterConnections = new int[numberOfClusters][numberOfClusters];
         ArrayList<ArrayList<Integer>> clusterNodesBelongsTo = new ArrayList<>(1);
         for(int i=0; i < numberOfClusters; i++) {
-            clusterNodesBelongsTo.add(new ArrayList());
+            clusterNodesBelongsTo.add(new ArrayList<>());
         } 
 
         //clusterNodesBelongsTo.get(0).add(2);

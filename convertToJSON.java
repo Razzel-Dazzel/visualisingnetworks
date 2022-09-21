@@ -23,7 +23,7 @@ class convertToJSON{
         
 		try {
 			reader = new BufferedReader(new FileReader
-            ("network_to_share_200.txt"));
+            ("network_to_share_1000.txt"));
             String line = reader.readLine();
 
             numnodes = Integer.parseInt(line);

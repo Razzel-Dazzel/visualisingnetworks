@@ -19,7 +19,7 @@ var spawn = require("child_process").spawn;
 var firstItteration = true;
 //var filename = "JSON200\\200Cluster.JSON";
 var canvas = d3.select("#network"),
-    total = 200, //total = JSON.parse(filename).nodenumber, //TRY AND FIND OUT HOW TO READ IN DATA AND WAIT FOR THIS REPLY
+    total = 1000, //total = JSON.parse(filename).nodenumber, //TRY AND FIND OUT HOW TO READ IN DATA AND WAIT FOR THIS REPLY
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,
@@ -120,20 +120,23 @@ async function exportNodeLocations(){
     file.end();
     filename = ".\\JSON200\\200Cluster.JSON";
     await getNodeClustes()
-    .then( function () {
-        convertClusterToJSON();
-    })
-    .then( async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        simulationModel(filename);
-    });
+    // .then( function () {
+    //     convertClusterToJSON();
+    // })
+    // .then( async () => {
+    //     await new Promise(resolve => setTimeout(resolve, 10000)).then( function () {
+    //         simulationModel(filename);
+    //     });
+        
+    // });
 }
 
 
 async function getNodeClustes(){
-    const nodepositions = `Rmynewfile.txt`;
+    //c++ script takes FILE K-Clusters and number of nodes
+    const nodepositions = `Rmynewfile.txt 20 1000`;
     try{
-        await execFile("./kMeanClustering", [nodepositions], (err, stdout, stderr) =>{
+        await execFile("./kMeanClustering", ["nodepositions", 20, 1000], (err, stdout, stderr) =>{
             if(err){
                 console.log(err);
             } if(stderr){
@@ -148,9 +151,9 @@ async function getNodeClustes(){
 }
 
 async function convertClusterToJSON(){
-    const clusterDataFile = `.\\output.csv`;
+    // Java file takes the number of clusters that were used.
     try{
-        await exec("java convertClusterToJSON", (err, stdout, stderr) =>{
+        await exec("java convertClusterToJSON \"20\"", (err, stdout, stderr) =>{
             if(err){
                 console.log(err);
             } if(stderr){
