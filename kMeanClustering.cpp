@@ -134,18 +134,14 @@ void kMeansClustering(vector<Point>* points, int epochs, int k, int totalNodes)
 }
 
 int main(int argc, char** argv) {
-    int const default_argc = 3;
-    char* const default_args[] = { "Rmynewfile.txt", 20, 200};
-    if (argc == 1)   // no arguments were passed
+    int totalNodes = 200;
+    int k = 12;
+    if (argc > 2)   
     {
-       // do things for no arguments
-
-       // usually those variables are set here for a generic flow onwards
-       argc = default_argc;
-       argv = default_args;
+        totalNodes = stoi(argv[3]);
+        k = stoi(argv[2]);
     }
-    int totalNodes = stoi(argv[3]);
-    int k = stoi(argv[2]);
+
     int epochs = 100; //argv[3]
     vector<Point> points = readcsv(&argv[1]); 
     kMeansClustering(&points, epochs, k, totalNodes);
