@@ -63,7 +63,7 @@ class convertClusterToJSON{
         //     }
         // }
 
-// Now i need to read the original file again to see how many nodes in different clusters connect with one another
+// Now i need to read the original file again to see how many nodes are in different clusters connect with one another
 
     try {
         reader = new BufferedReader(new FileReader
