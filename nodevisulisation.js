@@ -122,9 +122,8 @@ async function exportNodeLocations(){
             return false;
         }
         console.log("Am about to run Convert function");
-        if(await convertClusterToJSON()){
-            await simulationModel(filename);
-        };
+        await convertClusterToJSON()
+        await simulationModel(filename);
         console.log("finished running Convert function");
         
     })
