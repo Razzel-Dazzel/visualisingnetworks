@@ -140,11 +140,13 @@ async function getNodeClustes(){
             execFile("./kMeanClustering", [nodepositions, aaa, bbb], (err, stdout, stderr) =>{
                 if(err){
                     console.log(err);
+                    reject(err);
                 } if(stderr){
                     console.log(stderr);
+                    reject(err);
                 }
+                resolved(1);
             }) ;
-            resolved(1);
         } catch(err){
             reject(err);
         }
@@ -159,11 +161,13 @@ async function convertClusterToJSON(){
             exec("java convertClusterToJSON \"20\"", (err, stdout, stderr) =>{
                 if(err){
                     console.log(err);
+                    reject(err);
                 } if(stderr){
                     console.log(stderr);
+                    reject(err);
                 }
+                resolved(1);
             }) ;
-            resolved(1);
         }catch(err){
             console.log(err);
             reject(err);
