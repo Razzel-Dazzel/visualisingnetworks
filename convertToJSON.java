@@ -62,12 +62,12 @@ class convertToJSON{
         try (Stream<String> stream = Files.lines(Paths.get(statusfile)).skip(2).filter(s -> linee++ % N == 0)) {
 
             //stream.forEach(System.out::println);
-            // stream.forEach(line -> {
-            //     String[] linearray = line.split("\t");
-            //     for (int i = 0; i < linearray.length; i++){
-            //         nodestatus.get(i).add(Integer.parseInt(linearray[i]));
-            //     }
-            // });
+            stream.forEach(line -> {
+                String[] linearray = line.split("\t");
+                for (int i = 0; i < linearray.length; i++){
+                    nodestatus.get(i).add(Integer.parseInt(linearray[i]));
+                }
+            });
 
             // /// USE THIS TO VIEW THE NODESTATUS ARRAY
             // int vertexCount2 = nodestatus.size();
@@ -80,9 +80,9 @@ class convertToJSON{
             //     }
             // }
 
-            String listString = nodestatus.get(0).stream().map(Object::toString)
-                        .collect(Collectors.joining(", "));
-            System.out.println(listString);
+            // String listString = nodestatus.get(0).stream().map(Object::toString)
+            //             .collect(Collectors.joining(", "));
+            // System.out.println(listString);
 
 
 			// reader = new BufferedReader(new FileReader
@@ -165,7 +165,10 @@ class convertToJSON{
                         Object element = itr.next();
                         if(!flag) flag = true;
                         else fw.write(",\n");
-                        fw.write("\t{ \"name\": \"" +  element.toString() + "\", \"status\": ["+"]}");
+                        // System.out.println(Integer.parseInt(element.toString()));
+                        String listString = nodestatus.get(Integer.parseInt(element.toString())).stream().map(Object::toString)
+                                            .collect(Collectors.joining(", "));
+                        fw.write("\t{ \"name\": \"" +  element.toString() + "\", \"status\": [" + listString +"]}");
                     }
                     fw.write("\n],\n\"links\": [\n\t{ \"source\": \"" + nodes.get(0) + 
                         "\",\"target\": \"" + links.get(0) + "\"}");
