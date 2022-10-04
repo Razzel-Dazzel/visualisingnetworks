@@ -1,3 +1,6 @@
+// Link can be used to do the first part of the application where the users needs to supply a file.
+// https://www.youtube.com/watch?v=q8DRUgSlwGc
+
 const electron = require('electron');
 const {exec, execFile} = require("child_process");
 const path = require('path');
@@ -6,7 +9,7 @@ const { systemPreferences } = require('electron');
 const { rejects } = require('assert');
 var filename = "JSONfiles\\NetworkProject.JSON";
 var countingsimulationlook = 0;
-
+var parentFileName = "";
 var spawn = require("child_process").spawn;
 var firstItteration = true;
 
@@ -42,6 +45,14 @@ async function simulationModel(filename) {
             .on("tick", update)
             .force("link")
             .links(graph.links);
+
+        canvas
+            .call(d3.drag()
+            .container(canvas.node())
+            .subject(dragsubject)
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
 
         function update() {
             nodesStillMoving(firstItteration);
@@ -80,10 +91,37 @@ async function simulationModel(filename) {
         ctx.moveTo(l.source.x, l.source.y);
         ctx.lineTo(l.target.x, l.target.y);
     }
+
+    function dragsubject(){
+        return simulation.find(d3.event.x, d3.event.y)
+    }
+
 }
 
 
 simulationModel(filename);
+
+function dragstarted() {
+    console.log(d3.event.subject.name)
+    var infoPage = document.getElementById("draggable")
+    var info = document.createElement("p")
+    infoPage.innerHTML = d3.event.subject.name;
+    infoPage.appendChild(info)
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d3.event.subject.fx = d3.event.subject.x;
+    d3.event.subject.fy = d3.event.subject.y;
+}
+
+function dragged() {
+    d3.event.subject.fx = d3.event.x;
+    d3.event.subject.fy = d3.event.y;
+}
+
+function dragended() {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d3.event.subject.fx = null;
+    d3.event.subject.fy = null;
+}
 
 function nodesStillMoving(firstItteration){
     if(firstItteration === true){
@@ -174,3 +212,8 @@ async function convertClusterToJSON(){
         };
     })
 }
+
+$(function() {
+    $("#draggable").draggable().css("position", "absolute");;
+});
+

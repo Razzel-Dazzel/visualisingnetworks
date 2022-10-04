@@ -1,0 +1,6 @@
+#draggable { 
+    z-index: 4000;
+    width: 350px; 
+    height: 350px; 
+    padding: 0em;
+}
