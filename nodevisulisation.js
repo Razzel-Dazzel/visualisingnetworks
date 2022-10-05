@@ -8,9 +8,8 @@ const fs = require('fs');
 const { systemPreferences } = require('electron');
 const { rejects } = require('assert');
 var filename = "JSONfiles\\NetworkProject.JSON";
-var countingsimulationlook = 0;
+var countingsimulationloop = 0;
 var parentFileName = "";
-var spawn = require("child_process").spawn;
 var firstItteration = true;
 
 var canvas = d3.select("#network"),
@@ -25,6 +24,7 @@ var canvas = d3.select("#network"),
 
 async function simulationModel(filename) {
     ctx = canvas.node().getContext("2d");
+
     simulation = d3.forceSimulation()
         .force("x", d3.forceX(width / 2)) // ----Locking x plane to the middle------
         .force("y", d3.forceY(height / 2)) // ---- Locking y plane to the middle ----
@@ -56,7 +56,7 @@ async function simulationModel(filename) {
 
         function update() {
             nodesStillMoving(firstItteration);
-            if(firstItteration && countingsimulationlook > 297){
+            if(firstItteration && countingsimulationloop > 297){
                 firstItteration = false;
                 exportNodeLocations();
             }
@@ -71,7 +71,7 @@ async function simulationModel(filename) {
             ctx.beginPath();
             graph.nodes.forEach(drawNode)
             
-            //ctx.style("fill","red");
+            //ctx.fillStyle("yellow");
             ctx.fill()
         }
     });
@@ -81,10 +81,8 @@ async function simulationModel(filename) {
         ctx.arc(d.x, d.y, r, 0, 2 * Math.PI);
         xCoordinates[d.name] = d.x;
         yCoordinates[d.name] = d.y;
+        ctx.fillStyle = "red";
 
-        if(d.name == 6){
-            ctx.fillStyle = "red";
-        }
     }
 
     function drawLink(l) {
@@ -101,12 +99,32 @@ async function simulationModel(filename) {
 
 simulationModel(filename);
 
+
+function againTest(){
+    d = "blue";
+    console.log("Trying colour");
+    firstItteration = true;
+    simulation
+        .alphaTarget(0.3);
+    
+    ctx = canvas.node().getContext("2d");
+    ctx.attr("fill", d)
+    //simulation.force("x").initialize(nodes);
+
+    
+    // var nodes = 
+    // graph.nodes.forEach( node => {
+    //     node.attr("fill", d)
+    // });
+}
+
 function dragstarted() {
     console.log(d3.event.subject.name)
     var infoPage = document.getElementById("draggable")
-    var info = document.createElement("p")
-    infoPage.innerHTML = d3.event.subject.name;
-    infoPage.appendChild(info)
+    infoPage.style.display = "block";
+    var title = document.getElementById("title")
+    title.innerHTML = d3.event.subject.name;
+
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d3.event.subject.fx = d3.event.subject.x;
     d3.event.subject.fy = d3.event.subject.y;
@@ -125,7 +143,7 @@ function dragended() {
 
 function nodesStillMoving(firstItteration){
     if(firstItteration === true){
-        countingsimulationlook ++;
+        countingsimulationloop ++;
         for(i=0; i<xCoordinates.length; i++){
             if(xCoordinates[i] != xCoordinatesCheck[i] || yCoordinates[i] != yCoordinatesCheck[i]) {
                 xCoordinates.forEach(function callback(value, index) { 
@@ -215,5 +233,10 @@ async function convertClusterToJSON(){
 
 $(function() {
     $("#draggable").draggable().css("position", "absolute");;
+});
+
+$( "#close" ).click(function() {
+    var infoPage = document.getElementById("draggable")
+    infoPage.style.display = "none";
 });
 

@@ -1,6 +1,8 @@
-#draggable { 
+#draggable {
+    display:none;
     z-index: 4000;
     width: 350px; 
     height: 350px; 
     padding: 0em;
+    border:1px solid black;
 }
