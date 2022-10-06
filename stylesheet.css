@@ -1,8 +1,14 @@
+p.ui-widget-content, h1.ui-widget-content{
+    color:#FFFFFF;
+}
+
 #draggable {
     display:none;
-    z-index: 4000;
-    width: 350px; 
+    z-index: 2000;
+    width: 200px; 
     height: 350px; 
-    padding: 0em;
+    padding: 1em;
     border:1px solid black;
+    text-align: center;
+    background-color: powderBlue;
 }

@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 
 
 class convertToJSON{
-    static int N = 4; // Each line chosen from the status file
+    static int N = 1000; // Each line chosen from the status file
     static int linee = 0; // or 1 depends on how you define Nth
     public static void main(String[] args) throws IOException{
         int numnodes = 0;
@@ -29,7 +29,7 @@ class convertToJSON{
         
 		try {
 			reader = new BufferedReader(new FileReader
-            ("smalldata.txt"));
+            ("network_to_share_100000.txt"));
             //("network_to_share_200.txt"));
             String line = reader.readLine();
 
@@ -58,7 +58,7 @@ class convertToJSON{
             nodestatus.add(new ArrayList<>());
         }
 
-        String statusfile = ".//smallstatus.txt";
+        String statusfile = "NodeStatus.txt";
         try (Stream<String> stream = Files.lines(Paths.get(statusfile)).skip(2).filter(s -> linee++ % N == 0)) {
 
             //stream.forEach(System.out::println);
@@ -176,7 +176,6 @@ class convertToJSON{
                         fw.write(",\n\t{ \"source\": \"" + nodes.get(i) + 
                         "\",\"target\": \"" + links.get(i) + "\"}");
                     }
-                    System.out.println(actualNodes.size());
                     fw.write("\n]\n}");
 
                 } catch (IOException e) {

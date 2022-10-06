@@ -10,18 +10,28 @@
 </head>
   <body>
     <div id="draggable" class="ui-widget-content">
-      <h1 id="title">TITLE</h1>
-      <p>data</p>
-      <p>data</p>
-      <p>data</p>
-      <button>inspect</button>
+      <h1 id="title"></h1>
+
+      <p id="Susceptible"></p>
+      <p id="Exposed"></p>
+      <p id="Infectious"></p>
+      <p id="Recovered"></p>
+      <p id="Deaths"></p>
+      <p id="asd"></p>
+      <p id="dsa"></p>
+
+
+  
+      <button id=>inspect</button>
       <button id="close">close</button>
     </div>
     <!-- <h1>200 NODES</h1> -->
     <canvas id="network" width="1240" height="880" STYLE="border:1px solid black;"></canvas>
     <input type="number">
     <button onclick="testing()">Cluster</button>
-    <button onclick="againTest()">change colour?</button>"
+    <button onclick="againTest()">change colour?</button>
+    <p>Time Step</p>
+    <input type="number" id="time" name="quantity" min="1" max="5"><br><br>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="nodevisulisation.js"></script>
   </body>

@@ -176,13 +176,18 @@ class convertClusterToJSON{
                 fw.write("\"nodes\": [\n");
                 for(int i=0; i < numberOfClusters; i++ ) {
                     //Object element = itr.next();
-                    fw.write("\t{ \"name\": \"" +  i + "\"}");
-                    if(i < numberOfClusters-1){
-                        fw.write(",\n");
+                    fw.write("\t{ \"name\": \"" +  i + "\", \"nodeInClusters\": ["+ clusterNodesBelongsTo.get(i).get(0));
+                    int edgeCount = clusterNodesBelongsTo.get(i).size();
+                    for (int j = 1; j < edgeCount; j++) {
+                        fw.write(","+clusterNodesBelongsTo.get(i).get(j)+"");
                     }
+                    fw.write((i == numberOfClusters-1) ? "]}\n" : "]},\n");
+                    // if(i < numberOfClusters-1){
+                    //     fw.write(",\n");
+                    // }
                 }
-                fw.write("\n],\n");
-                fw.write("\"nodeInClusters\": [\n");
+        // fw.write("\n],\n");
+        // fw.write("\"nodeInClusters\": [\n");
 
         // int vertexCount = clusterNodesBelongsTo.size();
         // for (int i = 0; i < vertexCount; i++) {
@@ -194,15 +199,15 @@ class convertClusterToJSON{
         //     }
         // }
 
-                int vertexCount = clusterNodesBelongsTo.size();
-                for (int i = 0; i < vertexCount; i++) {
-                    int edgeCount = clusterNodesBelongsTo.get(i).size();
-                    fw.write("\t{ \""+i+"\": ["+clusterNodesBelongsTo.get(i).get(0));
-                    for(int j = 1; j < edgeCount; j++){
-                        fw.write(","+clusterNodesBelongsTo.get(i).get(j)+"");
-                    }
-                    fw.write((i == vertexCount-1) ? "]}\n" : "]},\n");
-                }
+                // int vertexCount = clusterNodesBelongsTo.size();
+                // for (int i = 0; i < vertexCount; i++) {
+                //     int edgeCount = clusterNodesBelongsTo.get(i).size();
+                //     fw.write("\t{ \""+i+"\": ["+clusterNodesBelongsTo.get(i).get(0));
+                //     for(int j = 1; j < edgeCount; j++){
+                //         fw.write(","+clusterNodesBelongsTo.get(i).get(j)+"");
+                //     }
+                //     fw.write((i == vertexCount-1) ? "]}\n" : "]},\n");
+                // }
 
 
                 fw.write("\n],\n\"links\": [\n");

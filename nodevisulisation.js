@@ -12,8 +12,10 @@ var countingsimulationloop = 0;
 var parentFileName = "";
 var firstItteration = true;
 
+var parentObj = JSON.parse(fs.readFileSync("JSONfiles\\NetworkProject.JSON"));
+
 var canvas = d3.select("#network"),
-    total = parseInt(JSON.parse(fs.readFileSync("JSONfiles\\NetworkProject.JSON")).numNodes),
+    total = parseInt(parentObj.numNodes),
     width = canvas.attr("width"),
     height = canvas.attr("height"),
     r = 8,
@@ -31,7 +33,6 @@ async function simulationModel(filename) {
         .force("collide", d3.forceCollide(r))
         .force("charge", d3.forceManyBody()
             .strength(-200))
-            //.alphaDecay(0) // Helps repell nodes from one another
         .force("link", d3.forceLink()
             .id(function (d) { return d.name; }));
 
@@ -99,7 +100,7 @@ async function simulationModel(filename) {
 
 simulationModel(filename);
 
-
+// Trying to get nodes to change to an colour after simulation
 function againTest(){
     d = "blue";
     console.log("Trying colour");
@@ -119,11 +120,28 @@ function againTest(){
 }
 
 function dragstarted() {
-    console.log(d3.event.subject.name)
-    var infoPage = document.getElementById("draggable")
+    var nodeclicked = d3.event.subject.name;
+    var infoPage = document.getElementById("draggable");
+    var timestep = document.getElementById("time").value;
+    var currFile = JSON.parse(fs.readFileSync(filename));
+    const statusArray = new Array(7).fill(0);
+    var arrayOfNodes = currFile.nodes[nodeclicked].nodeInClusters;
+    arrayOfNodes.forEach(node => {
+        statusArray[parentObj.nodes[node].status[timestep]]++;
+    })
+    //currObj.nodeInClusters[nodeclicked]
     infoPage.style.display = "block";
-    var title = document.getElementById("title")
-    title.innerHTML = d3.event.subject.name;
+    document.getElementById("title").innerHTML = "Node: " + nodeclicked
+
+    document.getElementById("Susceptible").innerHTML = "Susceptible: " + statusArray[0]
+    document.getElementById("Exposed").innerHTML = "Exposed: " + statusArray[1]
+    document.getElementById("Infectious").innerHTML = "Infectious: " + statusArray[2]
+    document.getElementById("Recovered").innerHTML = "Recovered: " + statusArray[3]
+    document.getElementById("Deaths").innerHTML = "Deaths: " + statusArray[4]
+    document.getElementById("asd").innerHTML = "asd: " + statusArray[5]
+    document.getElementById("dsa").innerHTML = "dsa: " + statusArray[6]
+
+    
 
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d3.event.subject.fx = d3.event.subject.x;
