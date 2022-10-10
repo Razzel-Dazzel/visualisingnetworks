@@ -40,7 +40,7 @@ async function simulationModel(filename) {
     d3.json(filename, function(err, graph){ 
     //d3.json("fakedata.JSON", function (err, graph) {
         if (err) throw err;
-        
+
         simulation
             .nodes(graph.nodes)
             .on("tick", update)
@@ -69,20 +69,20 @@ async function simulationModel(filename) {
             ctx.stroke();
 
             // Drawing the nodes
-            ctx.beginPath();
+
             graph.nodes.forEach(drawNode)
             
-            //ctx.fillStyle("yellow");
-            ctx.fill()
         }
     });
 
     function drawNode(d) {
+        ctx.beginPath();
         ctx.moveTo(d.x, d.y);
         ctx.arc(d.x, d.y, r, 0, 2 * Math.PI);
         xCoordinates[d.name] = d.x;
         yCoordinates[d.name] = d.y;
-        ctx.fillStyle = "red";
+        ctx.fillStyle = d.name % 2 == 0? "red": "blue";
+        ctx.fill()
 
     }
 
@@ -121,6 +121,7 @@ function againTest(){
 
 function dragstarted() {
     var nodeclicked = d3.event.subject.name;
+
     var infoPage = document.getElementById("draggable");
     var timestep = document.getElementById("time").value;
     var currFile = JSON.parse(fs.readFileSync(filename));
@@ -179,13 +180,6 @@ function nodesStillMoving(firstItteration){
 
 
 async function exportNodeLocations(){
-    var x_values = 0;
-    var y_values = 0;
-    xCoordinates.forEach(function callback(value, index){ 
-        x_values = value + xCoordinatesCheck[index];
-        y_values = yCoordinates[index] + yCoordinatesCheck[index];
-    });
-
     file = fs.createWriteStream('Rmynewfile.txt');
     file.on('error', function(err) { /* error handling */ });
     xCoordinates.forEach(function callback(value, index){ file.write(value + '\t' + yCoordinates[index] + '\n'); });
@@ -199,7 +193,6 @@ async function exportNodeLocations(){
         await convertClusterToJSON()
         await simulationModel(filename);
         console.log("finished running Convert function");
-        
     })
 }
 
