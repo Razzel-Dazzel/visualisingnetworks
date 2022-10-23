@@ -2,36 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>200 NODES</title>
+  <title>Visualising Networks</title>
   <link rel='stylesheet', href="stylesheet.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
   <body>
+    <!-- Draggable div and node statuses -->
     <div id="draggable" class="ui-widget-content">
       <h1 id="title"></h1>
 
       <p id="Susceptible"></p>
-      <p id="Exposed"></p>
-      <p id="Infectious"></p>
+      <p id="Latent_1"></p>
+      <p id="Latent_2"></p>
+      <p id="Symptomatic_0"></p>
+      <p id="Symptomatic_1"></p>
+      <p id="Symptomatic_2"></p>
       <p id="Recovered"></p>
-      <p id="Deaths"></p>
-      <p id="asd"></p>
-      <p id="dsa"></p>
-
-
-  
-      <button id=>inspect</button>
-      <button id="close">close</button>
+      <p id="Dead"></p>
+      <!-- Buttons on information pannel to Inspect or Close -->
+      <div id="infoBtns">
+        <button id="inspect" onclick="inspectCluster()">Inspect</button>
+        <button id="close">Close</button>
+      </div>
     </div>
-    <!-- <h1>200 NODES</h1> -->
-    <canvas id="network" width="1240" height="880" STYLE="border:1px solid black;"></canvas>
-    <input type="number">
-    <button onclick="testing()">Cluster</button>
-    <button onclick="againTest()">change colour?</button>
-    <p>Time Step</p>
-    <input type="number" id="time" name="quantity" min="1" max="5" value="0"><br><br>
+    <!-- Canvas that contains the simulation network -->
+    <canvas id="network" width="800" height="700" STYLE="border:1px solid black;"></canvas>
+    <!-- Modification parameters the user can set -->
+    <div id="modifyBtns">
+      <div id="left">
+        <p>Clusters</p>
+        <input type="number" value="0">
+      </div>
+      <div id="right">
+        <p>Time Step</p>
+        <input type="number" id="time" name="quantity" min="0" max="5" value="0"><br><br>
+      </div>
+    </div>
+    <!-- Running D3.js and js file to simulation network -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="nodevisulisation.js"></script>
   </body>

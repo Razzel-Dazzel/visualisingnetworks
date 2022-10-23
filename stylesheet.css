@@ -1,14 +1,48 @@
+body{
+    background-color: #5F5452;
+}
+
 p.ui-widget-content, h1.ui-widget-content{
     color:#FFFFFF;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+
+#infoBtns {
+    padding-top: 10px;
 }
 
 #draggable {
     display:none;
     z-index: 2000;
     width: 200px; 
-    height: 350px; 
+    height: auto; 
     padding: 1em;
     border:1px solid black;
     text-align: center;
     background-color: powderBlue;
+    ui.position.left: 100px;
+}
+
+#modifyBtns {
+    display: inline-block;
+    *display: inline;
+    vertical-align: top;
+}
+
+#modifyBtns p {
+    font-size: 15px;
+}
+
+#left {
+    float: left;
+    width: 10px;
+    overflow: hidden;
+    padding-right: 200px;
+}
+  
+  #right {
+    overflow: hidden;
 }

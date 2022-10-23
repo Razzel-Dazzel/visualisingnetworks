@@ -18,19 +18,20 @@ import java.nio.file.Paths;
 
 class convertToJSON{
     static int N = 1000; // Each line chosen from the status file
-    static int linee = 0; // or 1 depends on how you define Nth
+    static int linee = 0; // Starting staus index
     public static void main(String[] args) throws IOException{
+        // Global data to be populated one files have been read.
         int numnodes = 0;
         ArrayList<Integer> nodes = new ArrayList<Integer>();
         ArrayList<Integer> links = new ArrayList<Integer>();
         Set<Integer> actualNodes = new HashSet<>();
         BufferedReader reader;
         
-        
+        // Try will read in all all the lines of the link file and get all the nodes as well as retain the link pairs.
 		try {
+            //Read in the Link files being used for RAW data
 			reader = new BufferedReader(new FileReader
             ("network_to_share_100000.txt"));
-            //("network_to_share_200.txt"));
             String line = reader.readLine();
 
             numnodes = Integer.parseInt(line);
@@ -42,9 +43,9 @@ class convertToJSON{
                 actualNodes.add(Integer.parseInt(values[1]));
                 nodes.add(Integer.parseInt(values[0]));
                 links.add(Integer.parseInt(values[1]));
+
                 // read next line
                 line = reader.readLine();
-                //System.out.println(line);
 			}
 			reader.close();
 		} catch (IOException e) {
@@ -60,54 +61,16 @@ class convertToJSON{
 
         String statusfile = "NodeStatus.txt";
         try (Stream<String> stream = Files.lines(Paths.get(statusfile)).skip(2).filter(s -> linee++ % N == 0)) {
-
-            //stream.forEach(System.out::println);
+            // Store all the stream data in nodestatus array
             stream.forEach(line -> {
                 String[] linearray = line.split("\t");
                 for (int i = 0; i < linearray.length; i++){
                     nodestatus.get(i).add(Integer.parseInt(linearray[i]));
                 }
             });
-
-            // /// USE THIS TO VIEW THE NODESTATUS ARRAY
-            // int vertexCount2 = nodestatus.size();
-            // for (int i = 0; i < vertexCount2; i++) {
-            //     int edgeCount = nodestatus.get(i).size();
-            //     for (int j = 0; j < edgeCount; j++) {
-            //         Integer startVertex = i;
-            //         Integer endVertex = nodestatus.get(i).get(j);
-            //         System.out.printf("Vertex %d is connected to vertex %d%n", startVertex, endVertex);
-            //     }
-            // }
-
-            // String listString = nodestatus.get(0).stream().map(Object::toString)
-            //             .collect(Collectors.joining(", "));
-            // System.out.println(listString);
-
-
-			// reader = new BufferedReader(new FileReader
-            // ("network_to_share_200.txt"));
-            // String line = reader.readLine();
-
-            // numnodes = Integer.parseInt(line);
-            // line = reader.readLine();
-            
-            // while (line != null) {
-            //     String[] values = line.split("\t");
-            //     actualNodes.add(Integer.parseInt(values[0]));
-            //     actualNodes.add(Integer.parseInt(values[1]));
-            //     nodes.add(Integer.parseInt(values[0]));
-            //     links.add(Integer.parseInt(values[1]));
-            //     System.out.println();
-            //     // read next line
-            //     line = reader.readLine();
-            //     //System.out.println(line);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-
 
         // Creating a new file that converts the one supplied into a JSON file.
         String filePath = ".\\JSONfiles\\";
@@ -136,7 +99,7 @@ class convertToJSON{
         }
         System.out.print("File created: " + f+"\n");
 
-
+        // Creata a FileWritter object
         FileWriter fw = null;
         try {
             fw = new FileWriter(f, true);
@@ -146,14 +109,13 @@ class convertToJSON{
 
 
         boolean writingToFile = true;
-
         List<Integer> sortedList = new ArrayList<Integer>(actualNodes);
         Collections.sort(sortedList);
 
-
+        //Function that will itterate over all the data that has been captured and create the JSON file.
         Iterator itr = actualNodes.iterator();
         if (fw != null) {
-            while (writingToFile) { //same as while(runTrue == true)
+            while (writingToFile) { 
     
                 try {
                     fw.write("{\n\"numNodes\": \"" + numnodes + "\",\n");
