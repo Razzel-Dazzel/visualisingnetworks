@@ -50,7 +50,7 @@ vector<Point> readcsv(char** filename) {
     return points;
 }
 
-// Makae this functions
+// Kmeans clustering algorithim
 void kMeansClustering(vector<Point>* points, int epochs, int k, int totalNodes)
 {
     int n = totalNodes;
